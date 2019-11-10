@@ -1,4 +1,6 @@
-### 5.2.2 Asynchronous BFS Construction (From the book [Distributed Graph Algorithms for Computer Networks](https://www.amazon.com/Distributed-Algorithms-Computer-Networks-Communications/dp/1447151720) by Kayhan Erciyes)
+### 5.2.2 Asynchronous BFS Construction 
+
+#### (From the book [Distributed Graph Algorithms for Computer Networks](https://www.amazon.com/Distributed-Algorithms-Computer-Networks-Communications/dp/1447151720) by Kayhan Erciyes)
 
 The second algorithm to build a BFS tree of a graph G is the distributed version
 of the Bellman–Ford algorithm called Update_BFS. We have a single initiator as
