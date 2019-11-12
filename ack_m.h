@@ -23,14 +23,12 @@
  * <pre>
  * message ackMessage
  * {
- *     short messageKind = 2;
  * }
  * </pre>
  */
 class ackMessage : public ::omnetpp::cMessage
 {
   protected:
-    short messageKind;
 
   private:
     void copy(const ackMessage& other);
@@ -49,8 +47,6 @@ class ackMessage : public ::omnetpp::cMessage
     virtual void parsimUnpack(omnetpp::cCommBuffer *b) override;
 
     // field getter/setter methods
-    virtual short getMessageKind() const;
-    virtual void setMessageKind(short messageKind);
 };
 
 inline void doParsimPacking(omnetpp::cCommBuffer *b, const ackMessage& obj) {obj.parsimPack(b);}

@@ -181,7 +181,6 @@ Register_Class(ackMessage)
 
 ackMessage::ackMessage(const char *name, short kind) : ::omnetpp::cMessage(name,kind)
 {
-    this->messageKind = 2;
 }
 
 ackMessage::ackMessage(const ackMessage& other) : ::omnetpp::cMessage(other)
@@ -203,29 +202,16 @@ ackMessage& ackMessage::operator=(const ackMessage& other)
 
 void ackMessage::copy(const ackMessage& other)
 {
-    this->messageKind = other.messageKind;
 }
 
 void ackMessage::parsimPack(omnetpp::cCommBuffer *b) const
 {
     ::omnetpp::cMessage::parsimPack(b);
-    doParsimPacking(b,this->messageKind);
 }
 
 void ackMessage::parsimUnpack(omnetpp::cCommBuffer *b)
 {
     ::omnetpp::cMessage::parsimUnpack(b);
-    doParsimUnpacking(b,this->messageKind);
-}
-
-short ackMessage::getMessageKind() const
-{
-    return this->messageKind;
-}
-
-void ackMessage::setMessageKind(short messageKind)
-{
-    this->messageKind = messageKind;
 }
 
 class ackMessageDescriptor : public omnetpp::cClassDescriptor
@@ -293,7 +279,7 @@ const char *ackMessageDescriptor::getProperty(const char *propertyname) const
 int ackMessageDescriptor::getFieldCount() const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? 1+basedesc->getFieldCount() : 1;
+    return basedesc ? 0+basedesc->getFieldCount() : 0;
 }
 
 unsigned int ackMessageDescriptor::getFieldTypeFlags(int field) const
@@ -304,10 +290,7 @@ unsigned int ackMessageDescriptor::getFieldTypeFlags(int field) const
             return basedesc->getFieldTypeFlags(field);
         field -= basedesc->getFieldCount();
     }
-    static unsigned int fieldTypeFlags[] = {
-        FD_ISEDITABLE,
-    };
-    return (field>=0 && field<1) ? fieldTypeFlags[field] : 0;
+    return 0;
 }
 
 const char *ackMessageDescriptor::getFieldName(int field) const
@@ -318,17 +301,12 @@ const char *ackMessageDescriptor::getFieldName(int field) const
             return basedesc->getFieldName(field);
         field -= basedesc->getFieldCount();
     }
-    static const char *fieldNames[] = {
-        "messageKind",
-    };
-    return (field>=0 && field<1) ? fieldNames[field] : nullptr;
+    return nullptr;
 }
 
 int ackMessageDescriptor::findField(const char *fieldName) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    int base = basedesc ? basedesc->getFieldCount() : 0;
-    if (fieldName[0]=='m' && strcmp(fieldName, "messageKind")==0) return base+0;
     return basedesc ? basedesc->findField(fieldName) : -1;
 }
 
@@ -340,10 +318,7 @@ const char *ackMessageDescriptor::getFieldTypeString(int field) const
             return basedesc->getFieldTypeString(field);
         field -= basedesc->getFieldCount();
     }
-    static const char *fieldTypeStrings[] = {
-        "short",
-    };
-    return (field>=0 && field<1) ? fieldTypeStrings[field] : nullptr;
+    return nullptr;
 }
 
 const char **ackMessageDescriptor::getFieldPropertyNames(int field) const
@@ -410,7 +385,6 @@ std::string ackMessageDescriptor::getFieldValueAsString(void *object, int field,
     }
     ackMessage *pp = (ackMessage *)object; (void)pp;
     switch (field) {
-        case 0: return long2string(pp->getMessageKind());
         default: return "";
     }
 }
@@ -425,7 +399,6 @@ bool ackMessageDescriptor::setFieldValueAsString(void *object, int field, int i,
     }
     ackMessage *pp = (ackMessage *)object; (void)pp;
     switch (field) {
-        case 0: pp->setMessageKind(string2long(value)); return true;
         default: return false;
     }
 }
@@ -438,9 +411,7 @@ const char *ackMessageDescriptor::getFieldStructName(int field) const
             return basedesc->getFieldStructName(field);
         field -= basedesc->getFieldCount();
     }
-    switch (field) {
-        default: return nullptr;
-    };
+    return nullptr;
 }
 
 void *ackMessageDescriptor::getFieldStructValuePointer(void *object, int field, int i) const
