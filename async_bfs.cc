@@ -139,7 +139,6 @@ bool compareLayers(int l1, int l2) {
  */
 void Node::handleLayerMessage(layerMessage *lMsg) {
 
-    EV << "HANDLE LAYER MESSAGE IN =========================================" << getFullName() << " FROM " << lMsg->getSenderGate()->getOwnerModule()->getFullName()<< std::endl;
     if(setParent(lMsg)) {     // If setParent return true, which means our layer has been changed
 
         char bubble_msg[50];
@@ -160,16 +159,12 @@ void Node::handleLayerMessage(layerMessage *lMsg) {
         int index = lMsg->getArrivalGate()->getIndex();
         std::list<int>::const_iterator it = std::find(children.begin(), children.end(), index);
         Node *k = check_and_cast<Node*>(gate("port$o", index)->getPathEndGate()->getOwnerModule());
-        if( getIndex() != k->gate("port$o", k->getParent())->getPathEndGate()->getOwnerModule()->getIndex()) {
-            if(it != children.end()) {
-                children.erase(it);
-                EV << getFullName() << "'in childrendan " << gate("port$o", index)->getPathEndGate()->getOwnerModule()->getFullName() << " silindi." << std::endl;
-            }
 
-            if(std::find(other.begin(), other.end(), index) == other.end()) {
+        if( getIndex() != k->gate("port$o", k->getParent())->getPathEndGate()->getOwnerModule()->getIndex()) {
+            if(it != children.end())
+                children.erase(it);
+            if(std::find(other.begin(), other.end(), index) == other.end())
                 other.push_back(index);
-                EV << getFullName() << "'in othersina " << gate("port$o", index)->getPathEndGate()->getOwnerModule()->getFullName() << " eklendi." << std::endl;
-            }
 
             rejectMessage *rMsg = createRejectMessage();
             send(rMsg, "port$o", lMsg->getArrivalGate()->getIndex());
@@ -184,21 +179,12 @@ void Node::handleLayerMessage(layerMessage *lMsg) {
  */
 void Node::handleAckMessage(ackMessage *aMsg) {
     int index = aMsg->getArrivalGate()->getIndex();
-    EV << "HANDLE ACK MESSAGE IN =====================================================" << getFullName() << std::endl;
     std::list<int>::const_iterator it = std::find(other.begin(), other.end(), index);
-    if(it != other.end()) {
+    if(it != other.end())
         other.erase(it);
-        EV << getFullName() << "'in othersindan " << gate("port$o", index)->getPathEndGate()->getOwnerModule()->getFullName() << " silindi." << std::endl;;
-    } else {
-        EV << getFullName() << "'in othersindan " << gate("port$o", index)->getPathEndGate()->getOwnerModule()->getFullName() << " zaten yoktu o yuzden silinmedi." << std::endl;;
-    }
 
-    if(std::find(children.begin(), children.end(), index) == children.end()) {
+    if(std::find(children.begin(), children.end(), index) == children.end())
         children.push_back(index);
-        EV << getFullName() << "'in childrenina " << gate("port$o", index)->getPathEndGate()->getOwnerModule()->getFullName() << " eklendi." << std::endl;;
-    } else {
-        EV << getFullName() << "'in childrenininda zaten " << gate("port$o", index)->getPathEndGate()->getOwnerModule()->getFullName() << " vardi eklenmedi." << std::endl;;
-    }
 
 
     delete aMsg;
@@ -237,12 +223,10 @@ bool Node::setParent(layerMessage *lMsg) {
         }
         my_layer = lMsg->getLayer();                    // change my_layer to layer in the received message
         parent = lMsg->getArrivalGate()->getIndex();    // Change parent to the index of the port that the message has arrived through.
-        EV << getFullName() << "'ina parent olarak " << gate("port$o", parent)->getPathEndGate()->getOwnerModule()->getFullName() << " eklendi" << std::endl;
         std::list<int>::const_iterator it;
-        if((it = std::find(other.begin(), other.end(), parent)) != other.end()) {
+
+        if((it = std::find(other.begin(), other.end(), parent)) != other.end())
             other.erase(it);
-            EV << getFullName() << "'in othersindan" << gate("port$o", parent)->getPathEndGate()->getOwnerModule()->getFullName() << " silindi" << std::endl;
-        }
 
         setParentPathColor();
         return true;
