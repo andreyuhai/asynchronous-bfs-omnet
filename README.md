@@ -1,4 +1,4 @@
-![simulation gif](https://github.com/andreyuhai/asynchronous-bfs-omnet/blob/master/simulation_sample.gif)
+<p align="center">![simulation gif](https://github.com/andreyuhai/asynchronous-bfs-omnet/blob/master/simulation_sample.gif)</p>
 
 
 ### 5.2.2 Asynchronous BFS Construction 
