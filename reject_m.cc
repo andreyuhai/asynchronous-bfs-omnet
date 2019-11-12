@@ -181,7 +181,6 @@ Register_Class(rejectMessage)
 
 rejectMessage::rejectMessage(const char *name, short kind) : ::omnetpp::cMessage(name,kind)
 {
-    this->messageKind = 3;
 }
 
 rejectMessage::rejectMessage(const rejectMessage& other) : ::omnetpp::cMessage(other)
@@ -203,29 +202,16 @@ rejectMessage& rejectMessage::operator=(const rejectMessage& other)
 
 void rejectMessage::copy(const rejectMessage& other)
 {
-    this->messageKind = other.messageKind;
 }
 
 void rejectMessage::parsimPack(omnetpp::cCommBuffer *b) const
 {
     ::omnetpp::cMessage::parsimPack(b);
-    doParsimPacking(b,this->messageKind);
 }
 
 void rejectMessage::parsimUnpack(omnetpp::cCommBuffer *b)
 {
     ::omnetpp::cMessage::parsimUnpack(b);
-    doParsimUnpacking(b,this->messageKind);
-}
-
-short rejectMessage::getMessageKind() const
-{
-    return this->messageKind;
-}
-
-void rejectMessage::setMessageKind(short messageKind)
-{
-    this->messageKind = messageKind;
 }
 
 class rejectMessageDescriptor : public omnetpp::cClassDescriptor
@@ -293,7 +279,7 @@ const char *rejectMessageDescriptor::getProperty(const char *propertyname) const
 int rejectMessageDescriptor::getFieldCount() const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? 1+basedesc->getFieldCount() : 1;
+    return basedesc ? 0+basedesc->getFieldCount() : 0;
 }
 
 unsigned int rejectMessageDescriptor::getFieldTypeFlags(int field) const
@@ -304,10 +290,7 @@ unsigned int rejectMessageDescriptor::getFieldTypeFlags(int field) const
             return basedesc->getFieldTypeFlags(field);
         field -= basedesc->getFieldCount();
     }
-    static unsigned int fieldTypeFlags[] = {
-        FD_ISEDITABLE,
-    };
-    return (field>=0 && field<1) ? fieldTypeFlags[field] : 0;
+    return 0;
 }
 
 const char *rejectMessageDescriptor::getFieldName(int field) const
@@ -318,17 +301,12 @@ const char *rejectMessageDescriptor::getFieldName(int field) const
             return basedesc->getFieldName(field);
         field -= basedesc->getFieldCount();
     }
-    static const char *fieldNames[] = {
-        "messageKind",
-    };
-    return (field>=0 && field<1) ? fieldNames[field] : nullptr;
+    return nullptr;
 }
 
 int rejectMessageDescriptor::findField(const char *fieldName) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    int base = basedesc ? basedesc->getFieldCount() : 0;
-    if (fieldName[0]=='m' && strcmp(fieldName, "messageKind")==0) return base+0;
     return basedesc ? basedesc->findField(fieldName) : -1;
 }
 
@@ -340,10 +318,7 @@ const char *rejectMessageDescriptor::getFieldTypeString(int field) const
             return basedesc->getFieldTypeString(field);
         field -= basedesc->getFieldCount();
     }
-    static const char *fieldTypeStrings[] = {
-        "short",
-    };
-    return (field>=0 && field<1) ? fieldTypeStrings[field] : nullptr;
+    return nullptr;
 }
 
 const char **rejectMessageDescriptor::getFieldPropertyNames(int field) const
@@ -410,7 +385,6 @@ std::string rejectMessageDescriptor::getFieldValueAsString(void *object, int fie
     }
     rejectMessage *pp = (rejectMessage *)object; (void)pp;
     switch (field) {
-        case 0: return long2string(pp->getMessageKind());
         default: return "";
     }
 }
@@ -425,7 +399,6 @@ bool rejectMessageDescriptor::setFieldValueAsString(void *object, int field, int
     }
     rejectMessage *pp = (rejectMessage *)object; (void)pp;
     switch (field) {
-        case 0: pp->setMessageKind(string2long(value)); return true;
         default: return false;
     }
 }
@@ -438,9 +411,7 @@ const char *rejectMessageDescriptor::getFieldStructName(int field) const
             return basedesc->getFieldStructName(field);
         field -= basedesc->getFieldCount();
     }
-    switch (field) {
-        default: return nullptr;
-    };
+    return nullptr;
 }
 
 void *rejectMessageDescriptor::getFieldStructValuePointer(void *object, int field, int i) const

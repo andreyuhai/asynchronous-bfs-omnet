@@ -23,14 +23,12 @@
  * <pre>
  * message rejectMessage
  * {
- *     short messageKind = 3;
  * }
  * </pre>
  */
 class rejectMessage : public ::omnetpp::cMessage
 {
   protected:
-    short messageKind;
 
   private:
     void copy(const rejectMessage& other);
@@ -49,8 +47,6 @@ class rejectMessage : public ::omnetpp::cMessage
     virtual void parsimUnpack(omnetpp::cCommBuffer *b) override;
 
     // field getter/setter methods
-    virtual short getMessageKind() const;
-    virtual void setMessageKind(short messageKind);
 };
 
 inline void doParsimPacking(omnetpp::cCommBuffer *b, const rejectMessage& obj) {obj.parsimPack(b);}
