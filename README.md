@@ -1,3 +1,6 @@
+![simulation gif](https://github.com/andreyuhai/asynchronous-bfs-omnet/blob/master/simulation_sample.gif)
+
+
 ### 5.2.2 Asynchronous BFS Construction 
 
 #### (From the book [Distributed Graph Algorithms for Computer Networks](https://www.amazon.com/Distributed-Algorithms-Computer-Networks-Communications/dp/1447151720) by Kayhan Erciyes)
