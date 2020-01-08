@@ -13,6 +13,6 @@ before, which starts the algorithm by sending the layer(l) message that contains
 
 An example is shown in Fig. 5.3 with six nodes numbered 1, . . . , 6, where the layer message carries the distance, and the time frame it is delivered as layer(distance,
 
-![Algorithm](https://raw.githubusercontent.com/andreyuhai/asynchronous-bfs-omnet/master/algorithm.png)
+![Algorithm](https://github.com/andreyuhai/asynchronous-bfs-omnet/blob/master/algorithm.png)
 
 time). Node 6 initiates the algorithm by sending the layer(1, 1) message to its one-hop neighbors. Each neighbor node, when it receives this message, compares the distance value in the message to its known distance and assigns its parent to the sender if the new distance is smaller. It can be seen in Fig. 5.3(a) that layer message reaches node 2 via node 5 before the direct connection between nodes 6 and 2, resulting in node 2 identifying node 5 as its parent. However, this situation is corrected in (b) when the layer message from node 6 reaches node 2 in the third time frame resulting in node 2 replacing its parent node 5 with node 6 correctly. Similarly, in time frame 4, node 3 replaces its parent node 4 with node 2 to correctly construct the BFS tree rooted at node 6.
